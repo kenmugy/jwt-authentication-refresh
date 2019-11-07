@@ -35,7 +35,7 @@ Content-Type: application/json
 }
 ###
 get http://localhost:1125/api/people/person
-Authorization: bearer 
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiamFuZSBheWUiLCJpYXQiOjE1NzMxNTgzNjN9.RJD0kyfIFfWOm0aK-6sZv-LLDOMpd8_YG3Q3P-S_uWQ
 ###
 get http://localhost:1125/api/people/person
-Authorization: bearer 
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoia2VuIG11Z2FiaSIsImlhdCI6MTU3MzE1ODQ3NX0.1Zj0WfhAZyEIe3p_BpeVcDa1sJ8Bx4lQ_7qgtVnqLq8
