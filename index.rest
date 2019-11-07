@@ -1,0 +1,41 @@
+get http://localhost:1125/api
+###
+get http://localhost:1125/api/people
+###
+post http://localhost:1125/api/people
+content-type: application/json
+
+{
+    "name": "ken mugabi",
+    "email": "kenmugy@gmail.com",
+    "password": "toomanysecrets"
+}
+###
+post http://localhost:1125/api/people
+content-type: application/json
+
+{
+    "name": "jane aye",
+    "email": "janeaye@gmail.com",
+    "password": "toofewsecrets"
+}
+###
+post http://localhost:1125/api/register
+Content-Type: application/json
+
+{
+    "name": "ken mugabi"
+}
+###
+post http://localhost:1125/api/register
+Content-Type: application/json
+
+{
+    "name": "jane aye"
+}
+###
+get http://localhost:1125/api/people/person
+Authorization: bearer 
+###
+get http://localhost:1125/api/people/person
+Authorization: bearer 
