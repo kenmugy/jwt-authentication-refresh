@@ -1,18 +1,24 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
 const app = express();
 const port = '1125';
 
 let people = [];
 app.use(express.json());
+
 // welcome
 app.get('/api', (req, res) => res.send('welcome to my api'));
+
 // get people
 app.get('/api/people', (req, res) => res.json(people));
+
 // create person
 app.post('/api/people', async (req, res) => {
+  const { error } = validateBody(req.body);
+  if (error) return res.send(error.details[0].message);
   try {
     const hashedPw = await bcrypt.hash(req.body.password, 10);
     const person = {
@@ -26,6 +32,7 @@ app.post('/api/people', async (req, res) => {
     res.status(403).send(err);
   }
 });
+
 // get that person
 app.get('/api/people/person', validateUser, async (req, res) => {
   try {
@@ -35,6 +42,7 @@ app.get('/api/people/person', validateUser, async (req, res) => {
     res.sendStatus(404);
   }
 });
+
 // jwt token
 app.post('/api/register', async (req, res) => {
   const per = {
@@ -43,6 +51,7 @@ app.post('/api/register', async (req, res) => {
   const token = await jwt.sign(per, 'secretkey');
   res.json({ token });
 });
+
 // validate middleware
 async function validateUser(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -55,6 +64,26 @@ async function validateUser(req, res, next) {
   } catch (err) {
     res.status(403).send(err);
   }
+}
+
+// vaidation function
+function validateBody(body) {
+  const schema = Joi.object().keys({
+    name: Joi.string()
+      .min(3)
+      .max(10)
+      .required(),
+    email: Joi.string()
+      .max(255)
+      .email()
+      .required(),
+    password: Joi.string()
+      .min(3)
+      .max(1024)
+      .required()
+  });
+
+  return Joi.validate(body, schema);
 }
 
 app.listen(port, () => console.log(`listening on porn ${port}`));
